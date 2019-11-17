@@ -6,7 +6,7 @@ let nodes = [],
 	last_call = false,
 	opts = {},
 	events = {},
-	throttle = 50;
+	throttle = 5;
 
 const event_names = ['parallax/load', 'parallax/update'];
 for(ev in event_names){
@@ -108,6 +108,7 @@ function update(node){
 		style_string += 'transform:'+transform_string+';'
 	}
 
+
 	node.style = style_string;
 
 	node.dispatchEvent(events['parallax/update'])
@@ -155,16 +156,18 @@ function numeric_value_by_range(value, range){
 			let perc = block * i
 			if(perc > value){
 				break;
-			} else {
+			} else if(i > 0) {
 				prev = i - 1
 				next = i
 			}
 		}
 		if(range.length == 4){
-			value = (value - ((prev + 1) * block)) / block;
+			value = (value - ((next) * block)) / block;
 		}
 	}
-	return ((((range[next] - range[prev]) / 100) * value) + range[prev]);
+	let abs = Math.abs(range[next] - range[prev]);
+	
+	return abs - (abs * value)
 }
 
 // Calculate a color value by array of numbers
