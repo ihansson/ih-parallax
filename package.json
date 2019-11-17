@@ -1,14 +1,14 @@
 {
-  "name": "ih-aiv",
+  "name": "ih-parallax",
   "version": "0.0.1",
-  "description": "A simple library for toggling classes and animations when in view.",
-  "main": "src/aiv.js",
+  "description": "Library for making parallax animations based on scroll position.",
+  "main": "src/parallax.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/ihansson/ih-aiv.git"
+    "url": "git+https://github.com/ihansson/ih-parallax.git"
   },
   "keywords": [
     "javascript",
@@ -17,9 +17,9 @@
   "author": "Ian Hansson",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/ihansson/ih-aiv/issues"
+    "url": "https://github.com/ihansson/ih-parallax/issues"
   },
-  "homepage": "https://github.com/ihansson/ih-aiv#readme",
+  "homepage": "https://github.com/ihansson/ih-parallax#readme",
   "devDependencies": {
     "babel-core": "^6.26.3",
     "babel-loader": "^8.0.6",
