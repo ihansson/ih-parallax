@@ -63,3 +63,65 @@ Object.create(Parallax).init(document.querySelector('body'))
 function mapBetween(currentNum, minAllowed, maxAllowed, min, max) {
   return (maxAllowed - minAllowed) * (currentNum- min) / (max - min) + minAllowed;
 }
+
+let nodes = [],
+	last_call = false,
+	opts = {},
+	events = {};
+
+const event_names = ['parallax/load', 'parallax/update'];
+for(ev in event_names){
+	let event = document.createEvent('Event');
+	event.initEvent(event_names[ev], true, true);
+	events[event_names[ev]] = event;
+}
+
+function add(selector, options){
+	let _nodes = document.querySelectorAll(selector);
+	_nodes = Array.prototype.slice.call(_nodes)
+	for(i in _nodes) load(_nodes[i], options)
+	nodes = nodes.concat(_nodes)
+console.log(nodes)
+}
+
+function load(node, options){
+	console.log(node)
+}
+
+function update(){
+
+}
+
+// Is element within window bounds
+function is_in_view(node, visible){
+	let bottom = visible.bottom + (node.aiv.in_view[1] * visible.height) - visible.height;
+	let top = visible.top + (node.aiv.in_view[0] * visible.height);
+	return (node.offsetTop + node.aiv.offset) <= bottom && (node.offsetTop + node.offsetHeight + node.aiv.offset) >= top;
+}
+
+// Get visible area in window
+function visible_area(){
+	let y = parseInt(window.pageYOffset);
+	let height = parseInt(window.innerHeight);
+	return {top: y, bottom: y + height, height: height}
+}
+
+function bind(){
+	window.addEventListener('scroll', update)
+	window.addEventListener('resize', update)
+	window.setTimeout(function(){
+		let event = document.createEvent("Event");
+		event.initEvent("scroll", false, true); 
+		if(window.pageXOffset == 0) window.dispatchEvent(event);
+	}, 60)
+}
+
+function init(){
+	add('[parallax]');
+	bind();
+}
+
+module.exports = {
+	init: init,
+	add: add
+};
