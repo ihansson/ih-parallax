@@ -27,8 +27,8 @@ function load(node, options){
 
 	node.parallax = {
 		properties: [],
-		in_view: [0, 1],
-		offset: 20
+		in_view: [0.5, 1],
+		offset: 0
 	}
 
 	if(node.attributes['parallax-options']){
@@ -60,8 +60,9 @@ function load(node, options){
 
 function update(node){
 
-	const top = node.offsetTop + node.offsetHeight;
+	const top = node.offsetTop;
 	let animation_state = 1 - ((1 / (node.parallax.visible_bottom - node.parallax.visible_top)) * (top - node.parallax.visible_top));
+
 	if(animation_state > 1) animation_state = 1;
 	if(animation_state < 0) animation_state = 0;
 
@@ -75,7 +76,7 @@ function update(node){
 		} else if(animation_state === 1) {
 			value = prop.values[prop.values.length - 1]
 		} else {
-			if(['color'].indexOf(prop.property) !== -1){
+			if(['color','background-color'].indexOf(prop.property) !== -1){
 				value = color_value_by_range(animation_state, prop.values)
 			} else {
 				value = numeric_value_by_range(animation_state, prop.values)
@@ -90,6 +91,9 @@ function update(node){
 	if(styles.color){
 		style_string += 'color:rgb('+styles.color.r+','+styles.color.g+','+styles.color.b+');';
 	}
+	if(styles['background-color']){
+		style_string += 'background-color:rgb('+styles['background-color'].r+','+styles['background-color'].g+','+styles['background-color'].b+');';
+	}
 
 	if(styles.x || styles.y){
 		transform_string += 'translate('+styles.x+'px,'+styles.y+'px)';
@@ -98,7 +102,7 @@ function update(node){
 	for(style_name in styles){
 		if(['y','x','color'].indexOf(style_name) !== -1) continue;
 		if(['scale','rotate'].indexOf(style_name) !== -1) {
-			transform_string += ' '+style_name+'('+styles[style_name]+')';
+			transform_string += ' '+style_name+'('+styles[style_name]+(style_name === 'rotate' ? 'deg' : '')+')';
 		} else {
 			style_string += style_name+':'+styles[style_name]+';';
 		}
@@ -121,7 +125,8 @@ function update_all(){
 	last_call = now;
 	const visible = visible_area()
 	for(i in nodes) {
-		if(is_in_view(nodes[i], visible)) update(nodes[i])
+		calculate_view_boundries(nodes[i], visible)
+		update(nodes[i])
 	}
 }
 
@@ -137,7 +142,7 @@ function extract_settings(string, property){
 		if(['offset'].indexOf(key) !== -1) value = parseInt(value)
 		if(['in_view'].indexOf(key) !== -1) value = value.split(',').map(function(value){ return parseFloat(value) })
 		if(property){
-			value = value.split(',').map(function(value){ return ['color'].indexOf(key) !== -1 ? hexToRgb(value) : parseFloat(value) })
+			value = value.split(',').map(function(value){ return ['color','background-color'].indexOf(key) !== -1 ? hexToRgb(value) : parseFloat(value) })
 		}
 		settings[key] = arr[1] ? value : true
 	});
@@ -161,9 +166,9 @@ function numeric_value_by_range(value, range){
 				next = i
 			}
 		}
-		if(range.length == 4){
-			value = (value - ((next) * block)) / block;
-		}
+		value = (value - ((next) * block)) / block;
+		if(value > 1) value = 1
+		if(value < 0) value = 0
 	}
 	const abs = Math.abs(range[next] - range[prev]);
 	if(range[next] > range[prev]){
@@ -193,10 +198,9 @@ function hexToRgb(hex) {
 }
 
 // Is element within window bounds
-function is_in_view(node, visible){
-	node.parallax.visible_bottom = visible.bottom + (node.parallax.in_view[1] * visible.height) - visible.height;
-	node.parallax.visible_top = visible.top + (node.parallax.in_view[0] * visible.height);
-	return (node.offsetTop + node.parallax.offset) <= node.parallax.visible_bottom && (node.offsetTop + node.offsetHeight + node.parallax.offset) >= node.parallax.visible_top;
+function calculate_view_boundries(node, visible){
+	node.parallax.visible_bottom = visible.top + (node.parallax.in_view[1] * visible.height);
+	node.parallax.visible_top = visible.top + (node.parallax.in_view[0] ? (visible.height * node.parallax.in_view[0]) : 0);
 }
 
 // Get visible area in window
