@@ -165,9 +165,12 @@ function numeric_value_by_range(value, range){
 			value = (value - ((next) * block)) / block;
 		}
 	}
-	let abs = Math.abs(range[next] - range[prev]);
-	
-	return abs - (abs * value)
+	const abs = Math.abs(range[next] - range[prev]);
+	if(range[next] > range[prev]){
+		return (abs * value) + range[prev]
+	} else {
+		return (abs - (abs * value)) + range[next];
+	}
 }
 
 // Calculate a color value by array of numbers
