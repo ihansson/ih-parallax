@@ -1,0 +1,104 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="x-ua-compatible" content="ie=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link href="https://fonts.googleapis.com/css?family=Lexend+Deca&display=swap" rel="stylesheet">
+		<link rel="stylesheet" type="text/css" href="demo.css">
+		<title>Parallax</title>
+	</head>
+	<body>
+		<article class="wrapper demo" style="padding-bottom: 500px; overflow-x: hidden;">
+			<header>
+				<h1>Parallax - Demo</h1>
+				<dl>
+				  <dt>Github</dt>
+				  <dd><a href="https://github.com/ihansson/ih-parallax">github.com/ihansson/ih-parallax</a></dd>
+				  <dt>By Ian Hansson</dt>
+				  <dd><a href="https://ianhan.com">ianhan.com</a></dd>
+				</dl>
+			</header>
+			<section class="page">
+				<h2>In view</h2>
+<div class="code">code</div>
+				<div class="cards">
+					<div parallax="x:0,555" parallax-options="in_view: 0,0.5" class="card">
+						<h3>X position</h3>
+						<p>Phasellus facilisis pretium est sit amet ultrices.</p>
+					</div>
+				</div>
+			</section>
+			<section class="page">
+				<h2>Position</h2>
+<div class="code">code</div>
+				<div class="cards">
+					<div parallax="x:-100,0" class="card">
+						<h3>X position</h3>
+						<p>Phasellus facilisis pretium est sit amet ultrices.</p>
+					</div>
+					<div parallax="y:100,0" class="card">
+						<h3>Y position</h3>
+						<p>Phasellus facilisis pretium est sit amet ultrices.</p>
+					</div>
+					<div  parallax="x:50,0; y:-50,0" class="card">
+						<h3>Both</h3>
+						<p>Phasellus facilisis pretium est sit amet ultrices.</p>
+					</div>
+				</div>
+			</section>
+			<section class="page">
+				<h2>Colors</h2>
+<div class="code">code</div>
+				<div class="cards">
+					<div parallax="background-color:#DD5E89,#F7BB97" parallax-options="in_view:0,1" class="card">
+						<h3>Background</h3>
+						<p>Phasellus facilisis pretium est sit amet ultrices.</p>
+					</div>
+					<div parallax="color:#DD5E89,#F7BB97" parallax-options="in_view:0,1" class="card">
+						<h3>Text color</h3>
+						<p>Phasellus facilisis pretium est sit amet ultrices.</p>
+					</div>
+					<div parallax="background-color:#DD5E89,#F7BB97; color:#F7BB97,#DD5E89" parallax-options="in_view:0,1" class="card">
+						<h3>Both</h3>
+						<p>Phasellus facilisis pretium est sit amet ultrices.</p>
+					</div>
+				</div>
+			</section>
+			<section class="page">
+				<h2>Multi Step</h2>
+<div class="code">code</div>
+				<div class="cards">
+					<div parallax="y:200,0;x:50,0,50,0,50,0,50,0" parallax-options="in_view: 0.1,0.9" class="card">
+						<h3>X position</h3>
+						<p>Phasellus facilisis pretium est sit amet ultrices.</p>
+					</div>
+					<div parallax="x:200,0;y:50,0,50,0,50,0,50,0" parallax-options="in_view: 0.1,0.9" class="card">
+						<h3>X position</h3>
+						<p>Phasellus facilisis pretium est sit amet ultrices.</p>
+					</div>
+				</div>
+			</section>
+			<section class="page">
+				<h2>Misc</h2>
+<div class="code">code</div>
+				<div class="cards">
+					<div parallax="x:-100,0;y:100,0;rotate:90,0;" parallax-options="in_view: 0.4,0.9" class="card">
+						<h3>X position</h3>
+						<p>Phasellus facilisis pretium est sit amet ultrices.</p>
+					</div>
+					<div parallax="y:100,0;opacity:0,1;scale:0.5,1;" parallax-options="in_view: 0.4,0.9" class="card">
+						<h3>Y position</h3>
+						<p>Phasellus facilisis pretium est sit amet ultrices.</p>
+					</div>
+					<div  parallax="x:50,0;opacity:0,1;scale:1.2,1" parallax-options="in_view: 0.4,0.9" class="card">
+						<h3>Both</h3>
+						<p>Phasellus facilisis pretium est sit amet ultrices.</p>
+					</div>
+				</div>
+			</section>
+		</article>
+		<script type="text/javascript" src="../dist/parallax.min.js"></script>
+		<script type="text/javascript">parallax.init()</script>
+	</body>
+</html>
